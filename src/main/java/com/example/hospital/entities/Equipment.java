@@ -1,12 +1,20 @@
 package com.example.hospital.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Equipment {
 
     @Id
@@ -18,7 +26,7 @@ public class Equipment {
     private boolean isMovable;
 
     @ManyToOne()
-    @JoinColumn(name="room_id", nullable=false)
+    @JoinColumn(name="room_id")
     private Room room;
 
 }
