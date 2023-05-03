@@ -1,14 +1,11 @@
 package com.example.hospital.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -29,9 +26,13 @@ public class Appointment {
     private LocalTime begin;
     @Column(name = "appoiment_end")
     private LocalTime end;
+    private String presumptiveDiagnosis;
+    private boolean isFever;
+    private boolean isRecurring;
+    private boolean isCovidContact;
+
 
     @ManyToOne()
     private Room room;
-
 
 }

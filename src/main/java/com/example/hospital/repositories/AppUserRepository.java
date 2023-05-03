@@ -14,13 +14,13 @@ import java.util.UUID;
 public interface AppUserRepository extends JpaRepository<AppUser, UUID> {
     Optional<AppUser> findById(UUID id);
     List<AppUser> findByRole(Role role);
-    AppUser findByNameAndPassword(String name,String password);
+
+    AppUser findByEmailAndPassword(String email, String password);
     @Query("SELECT a FROM AppUser a JOIN Appointment app  WHERE a.role = ?1")
     List<AppUser> findByRoleAndAppoiment(Role role);
 
     @Query("select a from AppUser a left JOIN UserAppointment u ON u.appUser = a left JOIN Appointment app on app = u.appointment " +
-            "WHERE a.role = ?1 and " +
-            "(app.data is null or" +
-            "(app.data = ?2 and (app.begin > ?4 or app.end < ?3)))")
+            "WHERE a.role = ?1 and ((app.data is null) or (not exists (SELECT appoint from Appointment appoint join UserAppointment ua on ua.appointment = appoint.id where appoint.data = ?2 and ua.appUser = a.id ))" +
+            "or (app.data = ?2 and (app.begin >= ?4 or app.end <= ?3)))")
     List<AppUser> findByRoleAndAppoiment(Role role, LocalDate data, LocalTime t1, LocalTime t2);
 }

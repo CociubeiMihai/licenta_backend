@@ -44,7 +44,7 @@ public class MockDataRepo {
             if(!first){
                 System.out.println(roleRepository.findByName(linii[2]));
                 appUsers.add(AppUser.builder()
-                        .name(linii[0])
+                        .firstName(linii[0])
                         .password(linii[1])
                         .role(roleRepository.findByName(linii[2]))
                         .email(linii[3])
@@ -122,7 +122,6 @@ public class MockDataRepo {
                 appointmentList.add(Appointment.builder()
                         .begin(LocalTime.of(k, 0))
                         .end(LocalTime.of(k+1, 0))
-                        .room(roomList.get(rand2))
                         .data(LocalDate.now().plusDays(i))
                         .build());
                 appointmentList.add(Appointment.builder()

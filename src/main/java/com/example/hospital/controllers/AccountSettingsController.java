@@ -1,15 +1,10 @@
 package com.example.hospital.controllers;
 
 import com.example.hospital.dtos.*;
-import com.example.hospital.entities.AppUser;
 import com.example.hospital.services.AppUserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
 
 @RestController
 @CrossOrigin
@@ -23,8 +18,8 @@ public class AccountSettingsController {
     }
 
     @PostMapping("/client/register")
-    public ResponseEntity registerUser(@RequestBody LoginDto loginDto){
-        return ResponseEntity.status(HttpStatus.OK).body(appUserService.register(loginDto));
+    public ResponseEntity registerUser(@RequestBody RegisterDto registerDto){
+        return ResponseEntity.status(HttpStatus.OK).body(appUserService.register(registerDto));
     }
 
     @PostMapping("/client/changePassword")

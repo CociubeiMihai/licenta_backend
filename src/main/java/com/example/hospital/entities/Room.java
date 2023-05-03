@@ -24,8 +24,5 @@ public class Room {
     private String name;
     private boolean isAvailable;
 
-    @OneToMany(mappedBy = "room")
-    private List<Equipment> equipments;
-
 
 }

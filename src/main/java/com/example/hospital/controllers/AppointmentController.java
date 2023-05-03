@@ -1,6 +1,7 @@
 package com.example.hospital.controllers;
 
 import com.example.hospital.dtos.AppointmentDto;
+import com.example.hospital.dtos.DateAnd2TimeDto;
 import com.example.hospital.services.AppointmentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,5 +33,10 @@ public class AppointmentController {
     @GetMapping("/id/{id}")
     public ResponseEntity findApppoiment(@PathVariable UUID id){
         return ResponseEntity.status(HttpStatus.OK).body(appointmentService.findById(id));
+    }
+
+    @PostMapping("/room")
+    public ResponseEntity findAllRoomsAvailable(@RequestBody DateAnd2TimeDto dateAnd2TimeDto){
+        return ResponseEntity.status(HttpStatus.OK).body(appointmentService.findAllRoomsAvailable(dateAnd2TimeDto));
     }
 }

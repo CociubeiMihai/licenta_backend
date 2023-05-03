@@ -1,6 +1,7 @@
 package com.example.hospital.utils.initialization;
 
 import com.example.hospital.repositories.*;
+import lombok.Builder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ public class initializationService {
         this.equipmentRepository = equipmentRepository;
         this.appointmentRepository = appointmentRepository;
     }
-    @Bean
+
     public void initData(){
         roleRepository.saveAll(mockDataRepo.initRols());
         appUserRepository.saveAll(mockDataRepo.initUsers());

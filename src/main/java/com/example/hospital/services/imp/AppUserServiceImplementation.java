@@ -30,7 +30,7 @@ public class AppUserServiceImplementation implements AppUserService {
 
     @Override
     public AppUser logIn(LoginDto loginDto) {
-        return appUserRepository.findByNameAndPassword(loginDto.getName(), loginDto.getPassword());
+        return appUserRepository.findByEmailAndPassword(loginDto.getEmail(), loginDto.getPassword());
     }
 
 
@@ -54,22 +54,31 @@ public class AppUserServiceImplementation implements AppUserService {
     }
 
     @Override
-    public AppUser register(LoginDto loginDto) {
+    public AppUser register(RegisterDto registerDto) {
         Role role = roleRepository.findByName(defaultRole);
-        AppUser appUser = AppUser.builder().name(loginDto.getName()).password(loginDto.getPassword()).role(role).build();
+        AppUser appUser = AppUser.builder()
+                .firstName(registerDto.getFirstName())
+                .lastName(registerDto.getLastName())
+                .cnp(registerDto.getCnp())
+                .email(registerDto.getEmail())
+                .address(registerDto.getAddress())
+                .password(registerDto.getPassword())
+                .phoneNumber(registerDto.getPhoneNumber())
+                .role(role).build();
         appUserRepository.save(appUser);
         return appUser;
     }
 
     @Override
     public ResponseDto changePassword(ChangePaawordDto changePaawordDto) {
-        AppUser appUser = logIn(LoginDto.builder().password(changePaawordDto.getOldPassword()).name(changePaawordDto.getName()).build());
+        /*AppUser appUser = logIn(RegisterDto.builder().password(changePaawordDto.getOldPassword()).name(changePaawordDto.getName()).build());
         if(appUser == null){
             return ResponseDto.builder().isOk(false).build();
         }
         appUser.setPassword(changePaawordDto.getNewPassword());
         appUserRepository.save(appUser);
-        return ResponseDto.builder().isOk(true).appUser(appUser).build();
+        return ResponseDto.builder().isOk(true).appUser(appUser).build();*/
+        return null;
     }
 
     @Override

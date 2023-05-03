@@ -40,8 +40,9 @@ public class AppUserControlls {
         return ResponseEntity.status(HttpStatus.OK).body(appUserService.removeUser(id));
     }
 
-    @GetMapping("/findDisponible")
+    @PostMapping("/findDisponible")
     public ResponseEntity findDisponible(@RequestBody FindDisponiblePersonalDto personalDto){
+        System.out.println(personalDto.getRole());
         return ResponseEntity.status(HttpStatus.OK).body(appUserService.findDisponiblePersonal(personalDto));
     }
 

@@ -11,7 +11,7 @@ public interface AppUserService {
 
     AppUser logIn(LoginDto loginDto);
     List<AppUser> getAllPersonsByRole(String rol);
-    AppUser register(LoginDto loginDto);
+    AppUser register(RegisterDto registerDto);
     ResponseDto changePassword(ChangePaawordDto changePaawordDto);
     String deleteAccount(LoginDto loginDto);
 
