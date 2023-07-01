@@ -24,7 +24,6 @@ public class LoginController {
     @PostMapping
     public ResponseEntity login(@RequestBody LoginDto logInDto){
         AppUser appUser = appUserService.logIn(logInDto);
-        System.out.println(appUser);
         return ResponseEntity.status(HttpStatus.OK).body(Objects.requireNonNullElse(appUser, "Nu s-a gasit"));
     }
 

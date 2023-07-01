@@ -1,5 +1,6 @@
 package com.example.hospital.services.imp;
 
+import com.example.hospital.dtos.DisieasesDto;
 import com.example.hospital.dtos.IdAndStringDto;
 import com.example.hospital.dtos.StrDto;
 import com.example.hospital.dtos.UuidAndUidListDto;
@@ -12,6 +13,7 @@ import com.example.hospital.repositories.desease.IncompatibilityDiseaseClassRepo
 import com.example.hospital.services.DiseaseService;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
@@ -45,23 +47,52 @@ public class DiseaseServiceImplementation implements DiseaseService {
 
     @Override
     public void saveIncompatibility(UuidAndUidListDto uuidAndUidListDto) {
-        for(UUID id: uuidAndUidListDto.getUuidList()){
+        for(DiseaseType diseaseType: uuidAndUidListDto.getDiseaseTypes()){
+            DiseaseType inco = diseaseTypeRepository.findById(uuidAndUidListDto.getId()).get();
+            if(incompatibilityDiseaseClassRepository.findByType1AndAndType2(diseaseType,inco) == null && !diseaseType.getId().equals( inco.getId())){
             IncompatibilityDiseaseClass inc = incompatibilityDiseaseClassRepository.save(IncompatibilityDiseaseClass.builder()
                             .type1(diseaseTypeRepository.findById(uuidAndUidListDto.getId()).get())
-                            .type2(diseaseTypeRepository.findById(id).get())
+                            .type2(diseaseType)
                     .build());
             incompatibilityDiseaseClassRepository.save(inc);
             IncompatibilityDiseaseClass inc2 = incompatibilityDiseaseClassRepository.save(IncompatibilityDiseaseClass.builder()
                     .type2(diseaseTypeRepository.findById(uuidAndUidListDto.getId()).get())
-                    .type1(diseaseTypeRepository.findById(id).get())
+                    .type1(diseaseType)
                     .build());
             incompatibilityDiseaseClassRepository.save(inc2);
+            }
         }
     }
+
+
 
     @Override
     public List<DiseaseType> allTypes() {
         return diseaseTypeRepository.findAll();
+    }
+
+    @Override
+    public List<DisieasesDto> allDiseases() {
+        List<DisieasesDto> dtos = new LinkedList<>();
+        for(Disease disease : diseaseRepository.findAll()){
+            dtos.add(new DisieasesDto(disease.getDescription(),disease.getType().getName()));
+        }
+        return dtos;
+    }
+
+    @Override
+    public List<Disease> allDiseasesWithId() {
+        return diseaseRepository.findAll();
+    }
+
+    @Override
+    public List<DiseaseType> allTypesIncompatibleWith(UUID id) {
+        DiseaseType diseaseType = diseaseTypeRepository.findById(id).get();
+        List<DiseaseType> diseaseTypes = new LinkedList<>();
+        for(IncompatibilityDiseaseClass diseaseClass : incompatibilityDiseaseClassRepository.findByType1(diseaseType)){
+            diseaseTypes.add(diseaseClass.getType2());
+        }
+        return diseaseTypes;
     }
 
 

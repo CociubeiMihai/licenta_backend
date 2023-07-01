@@ -22,4 +22,13 @@ public interface AppUserService {
     AppUser updateUser(AppUser user);
     List<AppUser> findDisponiblePersonal(FindDisponiblePersonalDto personalDto);
 
+    void enable(String email);
+
+    void sendElail();
+
+    void forgotPassword(String email);
+    String resetPassword(String email, String token, String newPass);
+
+    String contactUs(ContactDto contactDto);
+
 }

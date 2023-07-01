@@ -2,8 +2,10 @@ package com.example.hospital.utils.initialization;
 
 import com.example.hospital.entities.*;
 import com.example.hospital.repositories.RoleRepository;
+import com.example.hospital.utils.constrains.RoomType;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Component;
 
 import java.io.FileReader;
@@ -30,6 +32,11 @@ public class MockDataRepo {
         }
         return roles;
     }
+    public static String hashPassword(String password) {
+        String salt = BCrypt.gensalt();
+        String hashedPassword = BCrypt.hashpw(password, salt);
+        return hashedPassword;
+    }
 
     List<AppUser> initUsers(){
         List<AppUser> appUsers = new ArrayList<>();
@@ -45,11 +52,13 @@ public class MockDataRepo {
                 System.out.println(roleRepository.findByName(linii[2]));
                 appUsers.add(AppUser.builder()
                         .firstName(linii[0])
-                        .password(linii[1])
+                        .password(hashPassword(linii[1]))
                         .role(roleRepository.findByName(linii[2]))
                         .email(linii[3])
                         .title(linii[4])
+                                .age(20)
                         .description(linii[5])
+                                .enabled(true)
                         .build());
             }
             first = false;
@@ -61,7 +70,10 @@ public class MockDataRepo {
     List<Room> initRooms(){
         List<Room> roomList = new ArrayList<>();
         for(int i = 0; i < nrRooms; i++){
-            roomList.add(Room.builder().name("Room_" + i).isAvailable(true).build());
+            roomList.add(Room.builder().name("Operation room" + i).type(RoomType.OPERATIE).slots(1).build());
+        }
+        for(int i = nrRooms; i < nrRooms * 2; i++){
+            roomList.add(Room.builder().name("Room_" + i).type(RoomType.CAZARE).slots(2).build());
         }
         return roomList;
     }

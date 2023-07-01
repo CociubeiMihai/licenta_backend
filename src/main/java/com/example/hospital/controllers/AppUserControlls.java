@@ -42,7 +42,6 @@ public class AppUserControlls {
 
     @PostMapping("/findDisponible")
     public ResponseEntity findDisponible(@RequestBody FindDisponiblePersonalDto personalDto){
-        System.out.println(personalDto.getRole());
         return ResponseEntity.status(HttpStatus.OK).body(appUserService.findDisponiblePersonal(personalDto));
     }
 

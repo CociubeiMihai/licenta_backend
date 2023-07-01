@@ -1,5 +1,6 @@
 package com.example.hospital.entities;
 
+import com.example.hospital.entities.desease.Disease;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -30,9 +31,20 @@ public class Appointment {
     private boolean isFever;
     private boolean isRecurring;
     private boolean isCovidContact;
+    private boolean isMom;
+    private LocalDate endRoom;
+
+    @ManyToOne
+    private Disease disease;
 
 
     @ManyToOne()
     private Room room;
+    @ManyToOne()
+    private Room operationRoom;
+    @ManyToOne()
+    private Room atiRoom;
+    @ManyToOne
+    private Vehicle vehicle;
 
 }

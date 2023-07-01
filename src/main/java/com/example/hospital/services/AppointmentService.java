@@ -1,10 +1,10 @@
 package com.example.hospital.services;
 
-import com.example.hospital.dtos.AppointmentDto;
-import com.example.hospital.dtos.DateAnd2TimeDto;
+import com.example.hospital.dtos.*;
 import com.example.hospital.entities.Appointment;
 import com.example.hospital.entities.Room;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.UUID;
@@ -16,6 +16,12 @@ public interface AppointmentService {
     List<Appointment> findAppointments();
     Appointment findById(UUID id);
 
-    List<Room> findAllRoomsAvailable (DateAnd2TimeDto dateAnd2TimeDto);
+    List<CalendarDTO> findUserAppointments(UUID idUser);
+    Appointment discharge(UUID idAppointment);
+    void remove(UUID id);
+
+    void importAppointments(MultipartFile multipartFile,UUID idUser);
+
+    ReevaluareDto reeval(UUID idPers);
 
 }

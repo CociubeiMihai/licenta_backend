@@ -3,6 +3,7 @@ package com.example.hospital.controllers;
 import com.example.hospital.dtos.IdAndStringDto;
 import com.example.hospital.dtos.StrDto;
 import com.example.hospital.dtos.UuidAndUidListDto;
+import com.example.hospital.dtos.UuidDto;
 import com.example.hospital.services.DiseaseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,5 +41,20 @@ public class DiseaseController {
     @GetMapping("/all/types")
     public ResponseEntity allTypes(){
         return ResponseEntity.status(HttpStatus.OK).body(diseaseService.allTypes());
+    }
+
+    @GetMapping("/all/diseases")
+    public ResponseEntity allDiseases(){
+        return ResponseEntity.status(HttpStatus.OK).body(diseaseService.allDiseases());
+    }
+
+    @GetMapping("/all/diseases/id")
+    public ResponseEntity allDiseasesId(){
+        return ResponseEntity.status(HttpStatus.OK).body(diseaseService.allDiseasesWithId());
+    }
+
+    @PostMapping("/incompatible/types")
+    public ResponseEntity allTypesIncompatibleWith(@RequestBody UuidDto uuidDto){
+        return ResponseEntity.status(HttpStatus.OK).body(diseaseService.allTypesIncompatibleWith(uuidDto.getId()));
     }
 }

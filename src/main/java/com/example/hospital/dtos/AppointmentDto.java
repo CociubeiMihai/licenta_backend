@@ -2,6 +2,7 @@ package com.example.hospital.dtos;
 
 import com.example.hospital.entities.AppUser;
 import lombok.Data;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
+@ToString
 public class AppointmentDto {
 
     private String description;
@@ -22,6 +24,11 @@ public class AppointmentDto {
     private boolean isFever;
     private boolean isRecurring;
     private boolean isCovidContact;
+    private UUID idDisease;
+    private UUID operation;
+    private int days;
+    private UUID vehicleId;
+    private UUID atiRoom;
 
     public boolean getisFever() {
         return isFever;

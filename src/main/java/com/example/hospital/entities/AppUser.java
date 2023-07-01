@@ -27,6 +27,8 @@ public class AppUser {
     private String address;
     private String cnp;
     private boolean isOnline;
+    private boolean enabled;
+    private int age;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Role role;
