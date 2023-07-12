@@ -20,6 +20,11 @@ public interface RoomRepository extends JpaRepository<Room, UUID> {
             "WHERE r.type = ?3 and (r not in (SELECT room from Room room left join Appointment  appintment on appintment.room = r where appintment.endRoom > ?1 and ?2 > appintment.data))")
     List<Room> findDisponibleRooms(LocalDate begin, LocalDate end, RoomType roomType);
 
+    @Query("SELECT r FROM Room r left join Appointment apoint on apoint.room = r " +
+            "WHERE r.type = ?3 and (r not in (SELECT room from Room room join Appointment  appintment on appintment.room = r where (appintment.data < ?1 and appintment.endRoom > ?1) or " +
+            "(appintment.data < ?2 and appintment.endRoom > ?2) or (appintment.data >= ?1 and appintment.endRoom <= ?2)))")
+    List<Room> findDisponibleRoomsWithNoAppointment(LocalDate begin, LocalDate end, RoomType roomType);//pt minori
+
     @Query("SELECT r.id FROM Room r join Appointment ap on r = ap.room " +
             "WHERE ?1 <= ap.endRoom and ?2 >= ap.data and r.type = ?4 and" +
             "(ap.disease not in (select d from Disease d join DiseaseType  dtype on dtype = d.type join IncompatibilityDiseaseClass ic on ic.type1 = dtype and ic.type2.id = ?3)) " +

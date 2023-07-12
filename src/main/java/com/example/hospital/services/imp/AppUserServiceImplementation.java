@@ -147,7 +147,7 @@ public class AppUserServiceImplementation implements AppUserService {
     }
 
     @Override
-    @Scheduled(fixedDelay = 100000000)
+    @Scheduled(cron = "0 1 1 * * ?")
     @Async
     public void sendElail() {
         List<Appointment> appointments = appointmentRepository.findByData(LocalDate.now().plusDays(1));

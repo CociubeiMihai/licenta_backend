@@ -25,7 +25,10 @@ public interface AppUserRepository extends JpaRepository<AppUser, UUID> {
     @Query("select a from AppUser a left JOIN UserAppointment u ON u.appUser = a left JOIN Appointment app on app = u.appointment " +
             "WHERE a.role = ?1 and ((app.data is null) or " +
             "(a not in (SELECT user from AppUser user join UserAppointment uapp on user = uapp.appUser join Appointment appointment on uapp.appointment = appointment " +
-            "where appointment.data = ?2 and (( ?3 > appointment.begin and ?3 < appointment.end) or ( ?4 > appointment.begin and ?4 < appointment.end) or (?3 <= appointment.begin and ?4 >= appointment.end)) ))" +
+            "where appointment.data = ?2 and " +
+            "(( ?3 > appointment.begin and ?3 < appointment.end) or " +
+            "( ?4 > appointment.begin and ?4 < appointment.end) or " +
+            "(?3 <= appointment.begin and ?4 >= appointment.end)) ))" +
             ")")
     List<AppUser> findByRoleAndAppoiment(Role role, LocalDate data, LocalTime t1, LocalTime t2);
 

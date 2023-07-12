@@ -54,7 +54,7 @@ public class AppointmentServiceImplementation implements AppointmentService {
         else {
             cazare = roomRepository.findById(appointmentDto.getRoom()).get();
         }
-
+        System.out.println(Boolean.valueOf(appointmentDto.getGen()));
         Appointment appointment = Appointment.builder()
                 .begin(appointmentDto.getBegin())
                 .data(appointmentDto.getData())
@@ -65,6 +65,7 @@ public class AppointmentServiceImplementation implements AppointmentService {
                 .presumptiveDiagnosis(appointmentDto.getPresumptiveDiagnosis())
                 .isRecurring(appointmentDto.getisRecurring())
                 .room(cazare)
+                .isMom(Boolean.parseBoolean(appointmentDto.getGen()))
                 .disease(diseaseRepository.findById(appointmentDto.getIdDisease()).get())
                 .operationRoom(roomRepository.findById(appointmentDto.getOperation()).get())
                 .build();
@@ -124,6 +125,7 @@ public class AppointmentServiceImplementation implements AppointmentService {
         Appointment appointment = appointmentRepository.findById(id).get();
         List< UserAppointment> appointments =  userAppointmentRepository.findByAppointment(appointment);
         for(UserAppointment u : appointments){
+            if(appointment.getRoom() != null)
             try {
                 emailService.sendDeleteMail(u.getAppUser(),appointment);
             } catch (MessagingException e) {

@@ -29,6 +29,7 @@ public class AppointmentDto {
     private int days;
     private UUID vehicleId;
     private UUID atiRoom;
+    private String genFeminin;
 
     public boolean getisFever() {
         return isFever;
@@ -41,4 +42,5 @@ public class AppointmentDto {
     public boolean getisCovidContact() {
         return isCovidContact;
     }
+    public String getGen(){return genFeminin;}
 }

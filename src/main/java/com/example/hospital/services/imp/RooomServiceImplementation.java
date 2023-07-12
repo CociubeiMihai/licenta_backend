@@ -56,7 +56,8 @@ public class RooomServiceImplementation implements RoomService {
     public List<Room> findRoomForMinor(CazareCuApartinatorDto cazareCuApartinatorDto) {
         LocalDate end = cazareCuApartinatorDto.getBegin().plusDays(cazareCuApartinatorDto.getDays());
         DiseaseType diseaseType = diseaseRepository.findById(cazareCuApartinatorDto.getIdDisease()).get().getType();
-        List<Room> roomList = roomRepository.findDisponibleRooms(cazareCuApartinatorDto.getBegin(),end, RoomType.CAZARE_COPII);
+        List<Room> roomList = roomRepository.findDisponibleRoomsWithNoAppointment(cazareCuApartinatorDto.getBegin(),end, RoomType.CAZARE_COPII);
+        System.out.println(roomList.size());
         for(UUID id : roomRepository.findRoomsWithParent(cazareCuApartinatorDto.getBegin(),end,diseaseType.getId(),RoomType.CAZARE_COPII, cazareCuApartinatorDto.isMom())) {
             roomList.add(roomRepository.findById(id).get());
         }
